@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Card System — KG to Class 8</title>
+<meta name="theme-color" content="#1c2b45">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icon-192.png">
+</head>
+<body>
+
+<header class="app-header no-print">
+  <div class="brand">
+    <div class="crest">RC</div>
+    <div>
+      <h1>Report Card System</h1>
+      <input id="schoolName" class="school-name-input" type="text" value="Your School Name" placeholder="School name">
+    </div>
+  </div>
+  <div class="status-pill" id="saveStatus">All changes saved</div>
+</header>
+
+<main>
+
+  <!-- CLASS + SUBJECT SETUP -->
+  <section class="panel no-print">
+    <div class="panel-head">
+      <span>Step 1 — Select Class &amp; Subjects</span>
+    </div>
+    <div class="panel-body">
+      <div class="toolbar" style="margin-bottom:1rem;">
+        <div class="field">
+          <label for="classSelect">Class</label>
+          <select id="classSelect"></select>
+        </div>
+        <div class="field">
+          <label for="newClassName">Add New Class</label>
+          <input type="text" id="newClassName" placeholder="e.g. Class 6">
+        </div>
+        <button class="btn-primary" id="addClassBtn">+ Add Class</button>
+        <button class="btn-danger" id="deleteClassBtn">Delete This Class</button>
+      </div>
+
+      <div class="field" style="margin-bottom:.5rem;">
+        <label>Subjects for this class (with max marks)</label>
+      </div>
+      <div class="subject-row" id="subjectTags"></div>
+      <div class="toolbar" style="padding:0;border:none;box-shadow:none;">
+        <div class="field">
+          <label for="newSubjectName">Subject Name</label>
+          <input type="text" id="newSubjectName" placeholder="e.g. Mathematics">
+        </div>
+        <div class="field">
+          <label for="newSubjectMax">Max Marks</label>
+          <input type="number" id="newSubjectMax" placeholder="100" value="100" min="1">
+        </div>
+        <button class="btn-outline" id="addSubjectBtn">+ Add Subject</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT ENTRY -->
+  <section class="panel no-print">
+    <div class="panel-head">
+      <span id="entryTitle">Step 2 — Add / Upload Student Result</span>
+    </div>
+    <div class="panel-body">
+      <form id="studentForm" class="student-form">
+        <div class="field">
+          <label for="rollNo">Roll No.</label>
+          <input type="text" id="rollNo" required>
+        </div>
+        <div class="field wide">
+          <label for="studentName">Student Name</label>
+          <input type="text" id="studentName" required>
+        </div>
+        <div id="marksInputs" class="student-form" style="display:contents;"></div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button type="submit" class="btn-gold" id="saveStudentBtn">Save Student</button>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button type="button" class="btn-outline" id="cancelEditBtn" style="display:none;">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- RESULTS TABLE -->
+  <section class="panel">
+    <div class="panel-head no-print">
+      <span>Step 3 — Class Result Sheet (auto-calculated)</span>
+      <div class="actions-row">
+        <button class="btn-outline btn-sm" id="exportCsvBtn">Download CSV</button>
+        <button class="btn-outline btn-sm" id="printSheetBtn">Print / Save PDF</button>
+      </div>
+    </div>
+    <div class="panel-body" id="resultTableWrap">
+      <div class="empty-state">No students added yet for this class.</div>
+    </div>
+    <div class="legend no-print">
+      <span><i style="background:#2f6b3e;"></i> Pass — 33% and above</span>
+      <span><i style="background:#a6720f;"></i> Promote — 25% to below 33%</span>
+      <span><i style="background:#a12626;"></i> Fail — below 25%</span>
+    </div>
+  </section>
+
+</main>
+
+<div id="reportCardModal" class="no-print" style="display:none; position:fixed; inset:0; background:rgba(28,43,69,.55); z-index:40; overflow:auto;">
+  <div style="max-width:680px;margin:2rem auto;">
+    <div style="text-align:right;max-width:640px;margin:0 auto .5rem;">
+      <button class="btn-outline btn-sm no-print" id="printOneBtn">Print This Card</button>
+      <button class="btn-danger btn-sm no-print" id="closeCardBtn">Close</button>
+    </div>
+    <div id="reportCardContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
